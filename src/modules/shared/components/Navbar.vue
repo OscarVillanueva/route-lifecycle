@@ -1,13 +1,38 @@
 <template>
   <div>
-    <router-link to="/">Pokemon List</router-link>
-    <router-link to="/id">Pokemon Por id</router-link>
-    <router-link to="/about">About</router-link>
+    <!-- <router-link :to="{ name: 'home' }">Pokemon List</router-link>
+    <router-link :to="{ name: 'pokemon-id', params: { id } }"
+      >Pokemon Por id</router-link
+    >
+    <router-link :to="{ name: 'about' }">About</router-link> -->
+    <CustomLink v-for="link in links" :key="link.to" :link="link" />
   </div>
 </template>
 
 <script>
-export default {};
+import { defineAsyncComponent } from "vue";
+export default {
+  components: {
+    CustomLink: defineAsyncComponent(() => import("./CustomLink.vue")),
+  },
+  data() {
+    return {
+      links: [
+        { to: "pokemon-home", name: "Pokemons" },
+        { to: "pokemon-id", name: "Por ID", id: 151 },
+        { to: "pokemon-about", name: "About" },
+        { to: "dbz-characters", name: "dbz-characters" },
+        { to: "dbz-about", name: "dbz-about" },
+        { to: "https://example.com", name: "Example" },
+      ],
+    };
+  },
+  computed: {
+    id() {
+      return Math.floor(Math.random() * (100 - 1 + 1) + 1);
+    },
+  },
+};
 </script>
 
 <style scoped>
@@ -20,7 +45,7 @@ div a {
   margin: 0 10px;
 }
 
-div .router-link-exact-active {
+/* div .router-link-exact-active {
   color: #42b983;
-}
+} */
 </style>
